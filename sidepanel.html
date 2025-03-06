@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #stop-icon {
+            display: none;
+            cursor: pointer;
+        }
+    #loading{
+      display: none;
+    }
+    #modelDropdown{
+      display: none;
+      width: 170px;
+    }
+    #centerd-cell{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+    td {
+      padding: 4px;
+    text-align: center; 
+    vertical-align: bottom;
+    height: 24px;
+}
+    .loading {
+          
+            display: flex;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .dots {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin-left: 3px;
+            background-color: black;
+            border-radius: 50%;
+            animation: blink 1.4s infinite;
+        }
+        .dots:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dots:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+     .loader {
+          border: 6px solid #f3f3f3; /* Light grey background */
+          border-top: 6px solid #6fba6f  ; /* Green color */
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
+          animation: spin 1s linear infinite;
+          margin: 10px auto;
+          display: none;
+          flex-shrink: 0;
+      }
+
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .top-container {
+      height: 28%;
+      background: #f4f4f4;
+      padding: 8px;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      box-shadow: 0 2px 4px rgba(145, 176, 175, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .form-content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+    
+    .form-group label {
+      font-weight: 500;
+      font-size: 12px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      height: 30px;
+      font-size: 12px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .input-row .form-group {
+      flex: 1;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 6px;
+      background: #f0d7d7;
+      color: rgb(0, 0, 0);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      height: 30px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .submit-btn:hover {
+      background:#f0d7d7;
+    }
+    
+    .bottom-container {
+      height: 70%;
+      padding: 8px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .outer-box {
+     
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      /* overflow: hidden; */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 5px;
+    }
+    /* Row to hold the two inner boxes */
+    .box-row {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    /* Inner boxes style */
+    .box-item {
+      display: flex;
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+    }
+    /* Specific borders for the two boxes */
+    .green-border {
+      border: 2px solid green;
+    }
+    .red-border {
+      border: 2px solid red;
+    }
+    /* Winner text */
+    .winner-text {
+      text-align: center;
+      font-weight: bold;
+    }
+    /* Extra information container */
+    .extra-info {
+      overflow: hidden;
+      height: 0;
+      transition: height 0.3s ease-out;
+    }
+
+    button {
+      transition: background-color 0.3s ease;
+    }
+    button.error {
+            animation: shake 0.5s ease; /* Add shake animation */
+        }
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="top-container">
+      <table>
+        <tr>
+          <td>
+            <div class="form-group">
+              <label for="api">API Key:</label>
+              <input type="password" id="api" placeholder="OpenAI or OpenRouter API key" >
+            </div>
+          </td>
+          <td>        
+            <div class="form-group">
+              <label for="text">Prize Category:</label>
+              <input type="text" id="text" placeholder="Best 'Real World' app">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div >
+              <label for="modelDropdown">Select Model:</label>
+              <div id="loading" class="loading" >
+                <span class="dots"></span><span class="dots"></span><span class="dots"></span><span class="dots"></span>
+              </div>
+              <select id="modelDropdown" style="display: none "></select>
+            </div>
+          </td>
+          <td >
+              <img id="stop-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAiElEQVR4nO2WQQ6AIAwEyx/1TZ7pj+ALfgYurjF60sQoFAikm+xhL3SSLUmJVAkCyKzLhMPRM4KzGw0NgNvA6C3esjgQegOI0kBQAGgFpEtoqn5DAOZ8iJMGVgDgK8+fchGA+MMKEPIr4EfHlSvgLCtA0Apcb0soBSJwC6ItQCpIgbMcbQFoZO0XUeZYJoIfiQAAAABJRU5ErkJggg==" alt="stop-gesture">        
+          </td>
+        </tr>
+      </table>
+      <button class="submit-btn busy" id="submitBtn">Check</button>
+
+    </div>
+    
+
+
+
+
+    <div class="bottom-container" id="tilesContainer">
+      <!-- Tiles will be added here dynamically -->
+      <div class="loader" id="loader"></div>
+      
+    </div>
+  </div>
+  <script type="module" src="youtube_transcript.js"></script>
+  <script type="module"    src="popup.js"></script>
+</body>
+</html>
+
+
+
+
