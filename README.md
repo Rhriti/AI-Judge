@@ -5,9 +5,8 @@
 4. Click on Load Unpacked and select the unzipped extension. Voila !  
 
 :white_check_mark: OpenAI and OpenRouter APIs supported !  
+<video src="https://github.com/user-attachments/assets/6a038d26-0d40-4265-aba7-e48c6f9ffa96" controls="controls">Your browser does not support playing this video!</video>
 
-video_embed  
-[![Watch the video](https://img.youtube.com/vi/UVAvqYHO1vc/0.jpg)](https://www.youtube.com/watch?v=UVAvqYHO1vc)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
